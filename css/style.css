@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: var(--font-size);
+}
+
+/****** VARIABLES ******/
+:root {
+    /*COULEUR*/
+
+    --color-table-row-odd: #F9F9FB;
+    --color-select: #8283D1;
+    --color-action-primary: #006400;
+    --color-action-secondary: #890300;
+    --color-table-row-even: #FDFDFD;
+    --color-text-primary: #2C2C2C;
+    --color-border: #ECECEC;
+    --color-required: #EA9224;
+    --color-placeholder: #ADADAD;
+    --color-file-field-surface: #D9D9D9;
+
+    /*TYPOGRAPHIE*/
+
+    --field-min-width: 320px;
+    --field-padding: 16px;
+    --row-padding: 32px;
+    --font-size: 16px;
+}
+
+
+/******************************/
+
+body, input[type="date"],input[type="time"] {
+    font-family: Inter, Lato, Arial, sans-serif;
+}
+
+label, span{
+    font-weight: 600;
+}
+
+option[selected], p, ::placeholder {
+    font-weight: 400;
+}
+
+select {
+    border: none;
+    font-weight: 600;
+}
+
+legend {
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+}
+
+/****** DÉBUT STYLE ******/
+
+h1{
+   font-size: 2em;
+    font-weight: 700;
+    padding: 32px 24px 0;
+}
+
+form{
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+fieldset{
+    border: none;
+}
+
+.fields_rows{
+    box-shadow: 0 0 4px rgba(0,0,0,12%);
+}
+
+.fields_rows>div{
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fields_rows>div:nth-of-type(odd){
+    background-color: var(--color-table-row-odd);
+}
+
+.fields_rows>div:nth-of-type(even){
+    background-color: var(--color-table-row-even);
+}
+
+.required:before{
+    content: "*";
+    color: var(--color-required);
+    margin-right: 4px;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], input[type="number"]{
+    flex-grow: 1;
+}
+
+input:not(input[type="radio"]), textarea{
+    border: 1px solid var(--color-border);
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 12%);
+}
+
+
+input:not(input[type="radio"]), select, textarea{
+    padding: 8px;
+    border-radius: 8px;
+}
+
+select{
+    min-width: 320px;
+    color: white;
+    background-color: var(--color-select);
+}
+
+input[type="radio"]{
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 12%);
+}
+
+.tattoo_row{
+    display: flex;
+    gap: 8px;
+}
+
+div.textarea_row{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.textarea_row>textarea{
+    width: 100%;
+}
+
+div>input[type="file"]{
+    min-width: 320px;
+    background-color: var(--color-file-field-surface);
+    color: var(--color-action-primary);
+    box-shadow: none;
+}
+
+input[type="submit"]{
+    color: white;
+    background-color: var(--color-action-primary);
+    font-weight: 600;
+    align-self: end;
+}
+
+span{
+    padding-right: 16px;
+}
