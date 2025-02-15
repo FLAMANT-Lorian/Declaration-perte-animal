@@ -15,7 +15,6 @@ if (!function_exists('check_required')) { // Vérifie si la fonction existe pour
             $_SESSION['errors'][$field_name] = sprintf($messages['required'], $field_name);
             return false;
         }
-
         return true;
     }
 }
@@ -30,8 +29,6 @@ if (!function_exists('check_email')) {
                 return false;
             }
         }
-        global $email;
-        $email = $_REQUEST[$field_name];
         return true;
     }
 }
@@ -62,8 +59,6 @@ if (!function_exists('check_in_collection')) {
             $_SESSION['errors'][$field_name] = sprintf($messages['in_collection'], $_REQUEST[$field_name], $collection_name);
             return false;
         }
-        global $country;
-        $country = $_REQUEST[$field_name];
         return true;
     }
 }
@@ -80,8 +75,21 @@ if (!function_exists('check_phone')) {
             $_SESSION['errors'][$field_name] = sprintf($messages['phone'], $field_name);
             return false;
         }
-        global $phone;
-        $phone = $_REQUEST[$field_name];
+        return true;
+    }
+}
+
+if (!function_exists('check_animal_type')) {
+    function check_animal_type(string $field_name, string $collection_name, array $collection): bool
+    {
+        if (array_key_exists($field_name, $_REQUEST) &&
+            trim($_REQUEST[$field_name]) !== '') {
+            if (!array_key_exists($_REQUEST[$field_name], $collection)) {
+                global $messages;
+                $_SESSION['errors'][$field_name] = sprintf($messages['animal_type'], $field_name, $collection_name);
+                return false;
+            }
+        }
         return true;
     }
 }
