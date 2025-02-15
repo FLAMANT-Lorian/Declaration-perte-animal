@@ -1,7 +1,8 @@
 <?php
 session_start();
-var_dump($_SESSION);
-$country_references = ['be' => 'Belgique', 'fr' => 'France', 'de' => 'Allemagne', 'ne' => 'Pays-Bas'];
+
+$countries = require './config/countries.php'; // Importer d'autre fichier PHP dans un autre
+
 ?>
 
     <!DOCTYPE html>
@@ -13,6 +14,7 @@ $country_references = ['be' => 'Belgique', 'fr' => 'France', 'de' => 'Allemagne'
         <meta name="Auhtor" content="auhtor">
         <title>Formulaire de délcaration de perte d'animal</title>
         <link rel="stylesheet" href="/css/style.css">
+        <script src="/js/main.js" defer></script>
     </head>
     <body>
     <h1>Déclaration de la perte de mon animal</h1>
@@ -48,26 +50,32 @@ $country_references = ['be' => 'Belgique', 'fr' => 'France', 'de' => 'Allemagne'
                         <p><?= $_SESSION['errors']['vemail']; ?></p>
                     </div>
                 <?php endif; ?>
+
                 <div>
-                    <label for="tel">Téléphone</label>
+                    <label for="phone">Téléphone</label>
                     <input type="tel"
-                           id="tel"
-                        <?php if (isset($_SESSION['old']['tel'])): ?>
-                            value="<?= $_SESSION['old']['tel']; ?>"
+                           id="phone"
+                        <?php if (isset($_SESSION['old']['phone'])): ?>
+                            value="<?= $_SESSION['old']['phone']; ?>"
                         <?php endif; ?>
-                           name="tel"
+                           name="phone"
                            placeholder="0499 10 10 10">
                 </div>
-                <?php if (isset($_SESSION['errors']['tel'])): ?>
+                <?php if (isset($_SESSION['errors']['phone'])): ?>
                     <div>
-                        <p><?= $_SESSION['errors']['tel']; ?></p>
+                        <p><?= $_SESSION['errors']['phone']; ?></p>
                     </div>
                 <?php endif; ?>
+
                 <div>
                     <label for="country">Pays</label>
                     <select name="country" id="country">
-                        <?php foreach ($country_references as $initiales => $country_reference): ?>
-                            <option value="<?= $initiales; ?>"><?= $country_reference; ?></option>
+                        <?php foreach ($countries as $code => $country): ?>
+                            <option value="<?= $code; ?>"
+                                   <?php if (isset($_SESSION['old']['country']) && $_SESSION['old']['country'] === $code): ?>
+                                    selected
+                                   <?php endif; ?>
+                            ><?= $country; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -75,9 +83,10 @@ $country_references = ['be' => 'Belgique', 'fr' => 'France', 'de' => 'Allemagne'
                     <div>
                         <p><?= $_SESSION['errors']['country']; ?></p>
                     </div>
-                <?php endif; ?></div>
+                <?php endif; ?>
+            </div>
         </fieldset>
-        <fieldset>
+        <!--<fieldset>
             <legend>Description de l'animal perdu</legend>
             <div class="fields_rows">
                 <div>
@@ -155,7 +164,7 @@ $country_references = ['be' => 'Belgique', 'fr' => 'France', 'de' => 'Allemagne'
                     </select>
                 </div>
             </div>
-        </fieldset>
+        </fieldset>-->
         <input type="submit" value="Déclarer la disparation de mon animal">
         <!--Quand je click sur le bouton, je fais une requête PHP-->
     </form>
