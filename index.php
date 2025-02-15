@@ -2,7 +2,7 @@
 session_start();
 
 $countries = require './config/countries.php'; // Importer d'autre fichier PHP dans un autre
-
+$animal_types = require './config/animal_types.php';
 ?>
 
     <!DOCTYPE html>
@@ -72,9 +72,9 @@ $countries = require './config/countries.php'; // Importer d'autre fichier PHP d
                     <select name="country" id="country">
                         <?php foreach ($countries as $code => $country): ?>
                             <option value="<?= $code; ?>"
-                                   <?php if (isset($_SESSION['old']['country']) && $_SESSION['old']['country'] === $code): ?>
+                                <?php if (isset($_SESSION['old']['country']) && $_SESSION['old']['country'] === $code): ?>
                                     selected
-                                   <?php endif; ?>
+                                <?php endif; ?>
                             ><?= $country; ?></option>
                         <?php endforeach; ?>
                     </select>
@@ -86,21 +86,39 @@ $countries = require './config/countries.php'; // Importer d'autre fichier PHP d
                 <?php endif; ?>
             </div>
         </fieldset>
-        <!--<fieldset>
+        <fieldset>
             <legend>Description de l'animal perdu</legend>
             <div class="fields_rows">
                 <div>
                     <label for="animal_type">Type d'animal</label>
-                    <select name="type" id="animal_type">
-                        <option value="dog">Chien</option>
-                        <option value="cat">Chat</option>
-                        <option value="rabbit">Lapin</option>
+                    <select name="animal_type" id="animal_type">
+                        <?php foreach ($animal_types as $type => $animal_type): ?>
+                            <option value="<?= $type; ?>"
+                                <?php if (isset($_SESSION['old']['animal_type']) && $_SESSION['old']['animal_type'] === $type): ?>
+                                    selected
+                                <?php endif; ?>
+                            ><?= $animal_type; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
+                <?php if (isset($_SESSION['errors']['animal_type'])): ?>
+                    <div>
+                        <p><?= $_SESSION['errors']['animal_type']; ?></p>
+                    </div>
+                <?php endif; ?>
                 <div>
-                    <label for="name" class="required">Nom de l'animal</label>
-                    <input type="text" name="name" id="name" placeholder="Rex">
+                    <label for="animal_name" class="required">Nom de l'animal</label>
+                    <input type="text" name="animal_name" id="animal_name"
+                        <?php if (isset($_SESSION['old']['animal_name'])): ?>
+                            value="<?= $_SESSION['old']['animal_name']; ?>"
+                        <?php endif; ?>
+                           placeholder="Rex">
                 </div>
+                <?php if (isset($_SESSION['errors']['animal_name'])): ?>
+                    <div>
+                        <p><?= $_SESSION['errors']['animal_name']; ?></p>
+                    </div>
+                <?php endif; ?>
                 <div>
                     <label for="puce">Puce (Obligatoire si chien)</label>
                     <input type="text" id="puce" name="chip" placeholder="1234567890">
@@ -135,36 +153,37 @@ $countries = require './config/countries.php'; // Importer d'autre fichier PHP d
                 </div>
                 <div>
                     <label for="animal-picture">Photo de l'animal</label>
-                    <input type="file" name="animal_picture" id="animal-picture" accept="image/gif, image/jpg, image/png">
+                    <input type="file" name="animal_picture" id="animal-picture"
+                           accept="image/gif, image/jpg, image/png">
                 </div>
             </div>
         </fieldset>
-        <fieldset>
-            <legend>Date et localité de la perte</legend>
-            <div class="fields_rows">
-                <div>
-                    <label for="disparition-date">Date</label>
-                    <input type="date" id="disparition-date" name="disparition-date">
-                </div>
-                <div>
-                    <label for="disparition-hour">Heure</label>
-                    <input type="time" id="disparition-hour" name="disparition-hour">
-                </div>
-                <div>
-                    <label for="postal-code">Code postal</label>
-                    <input type="text" id="postal-code" name="postal-code" placeholder="4000">
-                </div>
-                <div>
-                    <label for="disparition-country">Pays</label>
-                    <select name="disparition-country" id="disparition-country">
-                        <option value="be">Belgique</option>
-                        <option value="fr">France</option>
-                        <option value="de">Allemagne</option>
-                        <option value="ne">Pays-bas</option>
-                    </select>
-                </div>
-            </div>
-        </fieldset>-->
+        <!--<fieldset>
+             <legend>Date et localité de la perte</legend>
+             <div class="fields_rows">
+                 <div>
+                     <label for="disparition-date">Date</label>
+                     <input type="date" id="disparition-date" name="disparition-date">
+                 </div>
+                 <div>
+                     <label for="disparition-hour">Heure</label>
+                     <input type="time" id="disparition-hour" name="disparition-hour">
+                 </div>
+                 <div>
+                     <label for="postal-code">Code postal</label>
+                     <input type="text" id="postal-code" name="postal-code" placeholder="4000">
+                 </div>
+                 <div>
+                     <label for="disparition-country">Pays</label>
+                     <select name="disparition-country" id="disparition-country">
+                         <option value="be">Belgique</option>
+                         <option value="fr">France</option>
+                         <option value="de">Allemagne</option>
+                         <option value="ne">Pays-bas</option>
+                     </select>
+                 </div>
+             </div>
+         </fieldset>-->
         <input type="submit" value="Déclarer la disparation de mon animal">
         <!--Quand je click sur le bouton, je fais une requête PHP-->
     </form>
@@ -172,6 +191,5 @@ $countries = require './config/countries.php'; // Importer d'autre fichier PHP d
     </html>
 
 <?php
-
 $_SESSION['errors'] = null;
 $_SESSION['old'] = null;

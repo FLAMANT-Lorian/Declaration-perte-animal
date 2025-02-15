@@ -7,4 +7,5 @@ return [
     'same' => 'Le champ %s doit être le même que le champ %s',
     'in_collection' => 'Le champ "%s" ne fait pas partie des %s pris en charge par l’application',
     'min' => 'le champ %s doit avoir une taille minimum de %s caractères',
+    'animal_type' => 'L’animal renseigné dans le champ %s ne fait pas partie des %s pris en charge par notre application',
 ];
