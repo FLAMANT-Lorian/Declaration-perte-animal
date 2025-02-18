@@ -18,7 +18,7 @@ check_email('email');
 check_same('vemail', 'email');
 check_phone('phone');
 check_in_collection('country', 'countries', $countries);
-check_animal_type('animal_type', 'animal_types', $animal_types);
+check_in_collection('animal_type', 'animal_types', $animal_types);
 // check_min('phone',9); // TO DO !
 
 // REDIRECTION

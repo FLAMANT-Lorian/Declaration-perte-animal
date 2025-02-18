@@ -78,18 +78,3 @@ if (!function_exists('check_phone')) {
         return true;
     }
 }
-
-if (!function_exists('check_animal_type')) {
-    function check_animal_type(string $field_name, string $collection_name, array $collection): bool
-    {
-        if (array_key_exists($field_name, $_REQUEST) &&
-            trim($_REQUEST[$field_name]) !== '') {
-            if (!array_key_exists($_REQUEST[$field_name], $collection)) {
-                global $messages;
-                $_SESSION['errors'][$field_name] = sprintf($messages['animal_type'], $field_name, $collection_name);
-                return false;
-            }
-        }
-        return true;
-    }
-}
