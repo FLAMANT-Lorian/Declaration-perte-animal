@@ -1,32 +1,31 @@
 <?php
+require './vendor/autoload.php';
+use Tecgdcs\Validator;
 
 session_start();
+
+$_SESSION['errors'] = null;
+$_SESSION['old'] = null;
+
 $countries = require './config/countries.php';
+$messages = require './lang/fr/validation.php';
 $animal_types = require './config/animal_types.php';
-require './core/validation.php';
 
 $email = '';
 $phone = '';
 $country = '';
 $animal_type = '';
-$animal_name = '';
+$animal_name = '';@
 
-check_required('email');
-check_required('vemail');
-check_required('animal_name');
-check_email('email');
-check_same('vemail', 'email');
-check_phone('phone');
-check_in_collection('country', 'countries', $countries);
-check_in_collection('animal_type', 'animal_types', $animal_types);
-// check_min('phone',9); // TO DO !
 
-// REDIRECTION
-if (!is_null($_SESSION['errors'])) {
-    $_SESSION['old'] = $_REQUEST;
-    header('Location: /index.php'); //Redirection en cas d'erreur, on relance la page index.php
-    exit;
-}
+Validator::check([
+   'email' => 'required|email',
+   'vemail' => 'required|same:email',
+    'animal_name' => 'required',
+    'phone' => 'phone',
+    'country' => 'in_collection:countries',
+    'animal_types' => 'in_collection:animal_types',
+]);
 ?>
 
 <!DOCTYPE html>

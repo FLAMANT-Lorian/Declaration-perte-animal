@@ -189,7 +189,3 @@ $animal_types = require './config/animal_types.php';
     </form>
     </body>
     </html>
-
-<?php
-$_SESSION['errors'] = null;
-$_SESSION['old'] = null;
